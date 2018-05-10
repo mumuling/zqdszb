@@ -46,9 +46,9 @@ public class HttpUtil implements HttpOnNextListener {
     public HttpUtil(AppCompatActivity activity, BaseView onListener) {
         this.application = activity;
         this.httpOnListener = onListener;
-        manager = new HttpManager(activity, this, getHeaders());
+        manager = new HttpManager(activity, this, "");
         postEntity = new SubjectPostApi();
-        postEntity.setBaseUrl(JConstant.getHttpUrl());
+        postEntity.setBaseUrl(postEntity.getBaseUrl());
         progressDialogView = new ProgressDialogView(activity);
         postEntity.setProgressDialog(progressDialogView);
     }
@@ -58,7 +58,7 @@ public class HttpUtil implements HttpOnNextListener {
      **/
     public String getHeaders() {
         if (RxDataTool.isNullString(heards)) {
-            heards = PreferenceUtils.getValue(application, JConstant.heards, "");
+            heards = PreferenceUtils.getValue(application, JConstant.USER_AGENT, "");
             if (RxDataTool.isNullString(heards)) {
                 try {
                     JSONObject object = new JSONObject();

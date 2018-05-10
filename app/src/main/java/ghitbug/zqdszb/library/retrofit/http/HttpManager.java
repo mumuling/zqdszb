@@ -9,8 +9,10 @@ import com.trello.rxlifecycle.components.support.RxAppCompatActivity;
 
 import java.io.IOException;
 import java.lang.ref.SoftReference;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import ghitbug.zqdszb.library.common.JConstant;
 import ghitbug.zqdszb.library.retrofit.Api.BaseApi;
 import ghitbug.zqdszb.library.retrofit.exception.ApiException;
 import ghitbug.zqdszb.library.retrofit.exception.CodeException;
@@ -18,6 +20,7 @@ import ghitbug.zqdszb.library.retrofit.exception.FactoryException;
 import ghitbug.zqdszb.library.retrofit.exception.RetryWhenNetworkException;
 import ghitbug.zqdszb.library.retrofit.listener.HttpOnNextListener;
 import ghitbug.zqdszb.library.retrofit.subscribers.ProgressSubscriber;
+import ghitbug.zqdszb.library.utils.utils.MD5Util;
 import ghitbug.zqdszb.library.utils.utils.RxDataTool;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -64,13 +67,18 @@ public class HttpManager {
         if (RxDataTool.isNullString(basePar.getBaseUrl())) {
             onNextListener.onError(new ApiException(null, CodeException.NOT_NETWORD, "服务器地址错误"), basePar.getMethod());
         } else {
+            final String uStr = UUID.randomUUID().toString().replaceAll("-", "").toLowerCase();
+            final String tValue = System.currentTimeMillis() / 1000 + "";
             //手动创建一个OkHttpClient并设置超时时间缓存等设置
             OkHttpClient.Builder builder = new OkHttpClient.Builder();
             builder.addInterceptor(new Interceptor() {
                 @Override
                 public Response intercept(Chain chain) throws IOException {
                     Request newRequest = chain.request().newBuilder()
-                            .addHeader("headers", headers)
+                            .addHeader("User-Agent", JConstant.USER_AGENT)
+                            .addHeader("t", tValue)
+                            .addHeader("k", MD5Util.MD5(tValue + JConstant.MD5_KEY_BASE + uStr))
+                            .addHeader("u",uStr)
                             .build();
                     return chain.proceed(newRequest);
                 }

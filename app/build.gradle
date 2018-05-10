@@ -37,11 +37,11 @@ dependencies {
     compile 'com.squareup.okhttp3:logging-interceptor:3.4.1'
     /* recyclerview**/
     //noinspection GradleCompatible
-    compile 'com.android.support:support-v4:27.0.2'
+    compile 'com.android.support:support-v4:27.1.1'
     //noinspection GradleCompatible
 
     //noinspection GradleCompatible
-    compile 'com.android.support:recyclerview-v7:27.0.2'
+    compile 'com.android.support:recyclerview-v7:27.1.1'
     //debug版本编译日志库
     compile 'com.apkfuns.logutils:library:1.5.1.1'
     /* json*/

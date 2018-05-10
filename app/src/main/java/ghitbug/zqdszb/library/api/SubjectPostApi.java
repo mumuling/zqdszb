@@ -37,7 +37,7 @@ public class SubjectPostApi extends BaseApi {
 
     @Override
     public Observable getObservable(Retrofit retrofit) {
-        Object httpService = retrofit.create(JConstant.getHttpPostService());
+        Object httpService = retrofit.create(HttpPostService.class);
         try {
             String params = "";
             String token = JConstant.getToken();
@@ -48,7 +48,9 @@ public class SubjectPostApi extends BaseApi {
                     params = parameters.toJSONString();
                 }
             }
-            int count = mapMethods.get(getMethod());
+
+           // int count = mapMethods.get(getMethod());
+            int count =0;
             if (count == 0) {
                 return (Observable) httpService.getClass().getMethod(getMethod()).invoke(httpService);
             } else if (count == 1) {

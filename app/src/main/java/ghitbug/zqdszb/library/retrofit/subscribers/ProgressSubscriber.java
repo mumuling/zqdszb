@@ -6,11 +6,13 @@ import android.view.Window;
 import android.widget.TextView;
 
 import ghitbug.zqdszb.R;
+import ghitbug.zqdszb.library.common.JConstant;
 import ghitbug.zqdszb.library.retrofit.Api.BaseApi;
 import ghitbug.zqdszb.library.retrofit.exception.ApiException;
 import ghitbug.zqdszb.library.retrofit.exception.CodeException;
 import ghitbug.zqdszb.library.retrofit.exception.HttpTimeException;
 import ghitbug.zqdszb.library.retrofit.listener.HttpOnNextListener;
+import ghitbug.zqdszb.library.utils.utils.DES3.StringEncrypt;
 import ghitbug.zqdszb.library.utils.utils.RxDataTool;
 import rx.Subscriber;
 
@@ -146,8 +148,12 @@ public class ProgressSubscriber<T> extends Subscriber<T> {
         if (mSubscriberOnNextListener != null) {
             try {
                 String result = (String) t;
-                Log.i("ProgressSubscriber未解密", result);
+                StringEncrypt  encrypter = new StringEncrypt(JConstant.TripleDESKey);
+                result = encrypter.decrypt(result, JConstant.CN);
+
                 Log.i("方法：", api.getMethod());
+                Log.i("ProgressSubscriber未解密", result);
+
                 if (!RxDataTool.isNullString(result)) {
                     mSubscriberOnNextListener.onNext(api, result);
                 } else {

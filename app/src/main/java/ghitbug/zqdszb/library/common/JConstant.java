@@ -16,13 +16,23 @@ public class JConstant {
     public final static int MIN_PAGE_ROWS = 20;
     public final static int MAX_PAGE_ROWS = 20;
     public final static String bundleListName = "baseListData";
-    private static boolean encrypt = true;
+    private static boolean encrypt = false;
     public final static String heards = "heards";
     private static LoinOutInterface loinOutInterface;
     private static String httpUrl;
     private static String token;
     private static Class httpPostService;
     private static String registrationID;
+
+    public static final String USER_AGENT = "Mozilla/5.0 (compatible; MSIE 10.0; Windows Phone 8.0; Trident/6.0; IEMobile/10.0; ARM; Touch)";
+
+    public static final String MD5_KEY_BASE = "!w99o6MQHK9~kjvY";
+    public static final String TripleDESKey = "qr9ewrkqewjrkewjkjfdsak0";// 3des加密密钥
+    public static final String ParseTripleDESKey = "Fgygw8lwgWp9foom5cawuqfu";
+
+    public static final String CLEINT_ID = "7";
+    public static final String VERSION = "7_3_7.json";
+    public static final Integer CN = 2;
 
     public static boolean isEncrypt() {
         return JConstant.encrypt;

@@ -20,7 +20,9 @@ public abstract class BaseApi {
     private boolean showProgress = true;
     /*基础url*/
 //    private String baseUrl = "http://appadviser.cqlure.cn/version2/";
-    private String baseUrl = "";
+
+    public static final String PROTOCOL_VERSION= "k6/";
+    private String baseUrl = "http://js81b.10188.com:60006/k6/";
     //private String baseUrl="http://testapps.hejuzg.com/version1/"prysy.hejuzg.cc;
 //    private String baseUrl = "http://appadviser.yj.cn.com/version2/";
     /*方法-如果需要缓存必须设置这个参数；不需要p不用設置*/
