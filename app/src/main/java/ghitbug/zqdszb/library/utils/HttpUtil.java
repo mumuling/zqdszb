@@ -109,8 +109,26 @@ public class HttpUtil implements HttpOnNextListener {
     public void onNext(BaseApi api, String result) {
         try {
             Log.d("result------------->", result);
-            BaseResult baseResult = JSONObject.parseObject(result, BaseResult.class);
-            if (baseResult == null) {
+            LogUtils.json(result);
+            BaseResult baseResult=new BaseResult();
+            baseResult.setData(result);
+            if(api.isList()){
+                baseResult.setResult(JSONObject.parseArray(result, api.getData()));
+            }else {
+                if (api.getData() == BigDecimal.class) {
+                    baseResult.setResult(new BigDecimal(result));
+                } else if (api.getData() == String.class) {
+                    baseResult.setResult(result);
+                } else if (api.getData() == Integer.class) {
+                    baseResult.setResult(Integer.parseInt(result));
+                } else {
+                    baseResult.setResult(JSONObject.parseObject(result, api.getData()));
+                }
+            }
+            baseResult.setMethod(api.getMethod());
+            httpOnListener.onNext(baseResult);
+          //  BaseResult baseResult = JSONObject.parseObject(result, BaseResult.class);
+            /*if (baseResult == null) {
                 baseResult = new BaseResult();
                 baseResult.setResult(api.getData().newInstance());
                 httpOnListener.onError(new ApiException(null, CodeException.JSON_ERROR, "数据解析错误"), api.getMethod());
@@ -151,7 +169,7 @@ public class HttpUtil implements HttpOnNextListener {
                     baseResult.setMethod(api.getMethod());
                     httpOnListener.onNext(baseResult);
                 } else if (baseResult.getCode() == 101 || baseResult.getCode() == 102 || baseResult.getCode() == 103) {
-                  /*  final RxDialogSure rxDialogSure = new RxDialogSure(application);
+                  *//*  final RxDialogSure rxDialogSure = new RxDialogSure(application);
                     rxDialogSure.setContent(baseResult.getMsg());
                     rxDialogSure.setSure("立即重新登录");
                     rxDialogSure.setCancelable(false);
@@ -164,11 +182,11 @@ public class HttpUtil implements HttpOnNextListener {
                             }
                         }
                     });
-                    rxDialogSure.show();*/
+                    rxDialogSure.show();*//*
                 } else {
                     httpOnListener.onError(new ApiException(null, CodeException.ERROR, baseResult.getMsg()), api.getMethod());
                 }
-            }
+            }*/
         } catch (Exception e) {
             e.printStackTrace();
             httpOnListener.onError(new ApiException(null, CodeException.ERROR, "数据处理异常，请稍后再试"), api.getMethod());

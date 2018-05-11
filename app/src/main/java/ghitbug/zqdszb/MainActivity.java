@@ -12,6 +12,6 @@ public class MainActivity extends BaseMVPActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		presenter.sendPost(HttpPostService.LIVE_HOT_CHANNEL,null,HotChannelBean.class,false,false,null);
+		presenter.sendPost(HttpPostService.LIVE_HOT_CHANNEL,null,HotChannelBean.class,true,false,null);
 	}
 }
